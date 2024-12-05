@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Maintenance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Vehicle Maintenance</h1>
+
+    <table border="1">
+        <tr>
+            <th>Registration Number</th>
+            <th>Model</th>
+            <th>Seats</th>
+            <th>Driver</th>
+            <th>OBD Assigned</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        {% for vehicle in vehicles %}
+        <tr>
+            <td>{{ vehicle.registration_number }}</td>
+            <td>{{ vehicle.model }}</td>
+            <td>{{ vehicle.seats }}</td>
+            <td>{{ vehicle.driver }}</td>
+            <td>{{ vehicle.obd_assigned }}</td>
+            <td>{{ vehicle.status }}</td>
+            <td>
+                <a href="{{ url_for('assign_obd_to_vehicle', registration_number=vehicle.registration_number) }}">Assign OBD</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    <title>Maintenance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js for graphs -->
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Maintenance Data (OBD Real-Time)</h1>
+
+    <!-- Table displaying OBD data -->
+    <table border="1" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Control Module Voltage</th>
+                <th>Engine RPM</th>
+                <th>Battery Voltage</th>
+                <th>Coolant Temperature</th>
+                <th>Speed</th>
+                <th>MAF Sensor</th>
+                <th>O2 Sensor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in obd_data %}
+                <tr>
+                    <td>{{ row['Timestamp'] }}</td>
+                    <td>{{ row['Control Module Voltage'] }}</td>
+                    <td>{{ row['Engine RPM'] }}</td>
+                    <td>{{ row['Battery Voltage'] }}</td>
+                    <td>{{ row['Coolant Temperature'] }}</td>
+                    <td>{{ row['Speed'] }}</td>
+                    <td>{{ row['MAF Sensor'] }}</td>
+                    <td>{{ row['O2 Sensor'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Charts Section -->
+    <h2>Engine RPM Over Time</h2>
+    <canvas id="rpmChart"></canvas>
+
+    <h2>Speed Over Time</h2>
+    <canvas id="speedChart"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const obdData = JSON.parse('{{ obd_data | tojson | safe }}');
+    console.log(obdData); // Debugging: Print data to console
+</script>
+
+    // Function to create charts using Chart.js
+    function renderChart(canvasId, label, data, yLabel) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: obdData.map(item => item['Timestamp']),
+                datasets: [{
+                    label: label,
+                    data: obdData.map(item => item[data]),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Time' }
+                    },
+                    y: {
+                        title: { display: true, text: yLabel }
+                    }
+                }
+            }
+        });
+    }
+
+    // Render charts for RPM and Speed
+    renderChart('rpmChart', 'Engine RPM', 'Engine RPM', 'RPM');
+    renderChart('speedChart', 'Speed', 'Speed', 'Speed (km/h)');
+</script>
+{% endblock %}

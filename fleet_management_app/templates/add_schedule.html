@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1 class="text-center">Add Schedule</h1>
+<form method="POST" class="w-50 mx-auto">
+    <div class="mb-3">
+        <label class="form-label">Start City</label>
+        <input type="text" class="form-control" name="start_city" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Stop City</label>
+        <input type="text" class="form-control" name="stop_city" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Assign Bus</label>
+        <select name="assigned_bus" class="form-select">
+            <option value="">-- Select Bus --</option>
+            {% for vehicle in vehicles %}
+            <option value="{{ vehicle['registration_number'] }}">{{ vehicle['registration_number'] }} - {{ vehicle['model'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Departure Time</label>
+        <input type="time" class="form-control" name="departure_time" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Arrival Time</label>
+        <input type="time" class="form-control" name="arrival_time" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add Schedule</button>
+</form>
+{% endblock %}

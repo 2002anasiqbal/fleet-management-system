@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}Add Finance - Fleet Management{% endblock %}
+
+{% block content %}
+    <h1>Add Finance Record</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="month" class="form-label">Month</label>
+            <input type="text" id="month" name="month" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="revenue" class="form-label">Revenue</label>
+            <input type="number" id="revenue" name="revenue" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="fuel_cost" class="form-label">Fuel Cost</label>
+            <input type="number" id="fuel_cost" name="fuel_cost" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="maintenance_cost" class="form-label">Maintenance Cost</label>
+            <input type="number" id="maintenance_cost" name="maintenance_cost" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Finance Record</button>
+    </form>
+{% endblock %}

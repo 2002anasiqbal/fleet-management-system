@@ -1,0 +1,43 @@
+from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime
+
+app = Flask(__name__)
+
+# Assuming `vehicles` is a list of dictionaries passed from the backend to the HTML template
+vehicles = [
+    {'registration_number': 'ABC123', 'model': 'Model A'},
+    {'registration_number': 'XYZ456', 'model': 'Model B'}
+]
+
+@app.route('/add_finance', methods=['GET', 'POST'])
+def add_finance():
+    if request.method == 'POST':
+        bus_registration_number = request.form['bus_registration_number']
+        revenue = float(request.form['revenue'])
+        fuel_cost = float(request.form['fuel_cost'])
+        maintenance_cost = float(request.form['maintenance_cost'])
+        month = request.form['month']
+        date = request.form['date']  # Format: YYYY-MM-DD
+
+        # You can add logic here to store this data in the database
+
+        # For now, let's just print the data to the console
+        print(f"Bus ID: {bus_registration_number}")
+        print(f"Revenue: {revenue}")
+        print(f"Fuel Cost: {fuel_cost}")
+        print(f"Maintenance Cost: {maintenance_cost}")
+        print(f"Month: {month}")
+        print(f"Date: {date}")
+
+        return redirect(url_for('view_finance'))  # Redirect after submission
+
+    # If it's a GET request, render the form with the list of vehicles
+    return render_template('add_finance.html', vehicles=vehicles)
+
+@app.route('/view_finance')
+def view_finance():
+    # You can implement logic to display saved finance entries here
+    return "Finance Overview Page"
+
+if __name__ == '__main__':
+    app.run(debug=True)

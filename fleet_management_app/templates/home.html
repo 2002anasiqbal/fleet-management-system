@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1 class="text-center">Fleet Management Dashboard</h1>
+
+<!-- Fleet Overview Section -->
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Active Vehicles</h5>
+                <p class="card-text">{{ active_vehicle_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Available Vehicles</h5>
+                <p class="card-text">{{ available_vehicle_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Available Drivers</h5>
+                <p class="card-text">{{ available_driver_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Upcoming Routes</h5>
+                <p class="card-text">{{ upcoming_routes|length }} route(s) scheduled</p>
+                <a href="{{ url_for('view_schedules') }}" class="btn btn-light">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Management Sections -->
+<div class="row">
+    <!-- Vehicle Management Section -->
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Vehicle Management</h5>
+                <a href="{{ url_for('add_vehicle') }}" class="btn btn-primary">Add Vehicle</a>
+                <a href="{{ url_for('view_vehicles') }}" class="btn btn-secondary">View Vehicles</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driver Management Section -->
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Driver Management</h5>
+                <a href="{{ url_for('add_driver') }}" class="btn btn-primary">Add Driver</a>
+                <a href="{{ url_for('view_drivers') }}" class="btn btn-secondary">View Drivers</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Management Section -->
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Schedule Management</h5>
+                <a href="{{ url_for('add_schedule') }}" class="btn btn-primary">Add Schedule</a>
+                <a href="{{ url_for('view_schedules') }}" class="btn btn-secondary">View Schedules</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fleet Finance Overview Section -->
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Fleet Finance Overview</h5>
+                <p><strong>Total Revenue: </strong>${{ total_revenue }}</p>
+                <p><strong>Total Fuel Cost: </strong>${{ total_fuel_cost }}</p>
+                <p><strong>Total Maintenance Cost: </strong>${{ total_maintenance_cost }}</p>
+                <p><strong>Total Profit: </strong>${{ total_profit }}</p>
+                <a href="{{ url_for('view_finance') }}" class="btn btn-primary">View Detailed Finance</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
